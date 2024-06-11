@@ -1,0 +1,38 @@
+Customer name and total spent
+
+SELECT
+    c.first_name,
+    c.last_name,
+    SUM(pt.price * op.quantity) AS total_spent
+FROM
+    pizza_orders.customers c
+JOIN
+    pizza_orders.orders o ON c.idcustomers = o.idcustomers
+JOIN
+    pizza_orders.ordered_pizzas op ON o.idorders = op.idorders
+JOIN
+    pizza_orders.pizza_types pt ON op.idpizza = pt.idpizza
+GROUP BY
+    c.idcustomers, c.first_name, c.last_name;
+
+
+
+Customer name date of order total spent on order
+
+SELECT
+    c.first_name,
+    c.last_name,
+    o.date,
+    SUM(pt.price * op.quantity) AS total_for_date
+FROM
+    pizza_orders.customers c
+JOIN
+    pizza_orders.orders o ON c.idcustomers = o.idcustomers
+JOIN
+    pizza_orders.ordered_pizzas op ON o.idorders = op.idorders
+JOIN
+    pizza_orders.pizza_types pt ON op.idpizza = pt.idpizza
+GROUP BY
+    c.idcustomers, c.first_name, c.last_name, o.date
+ORDER BY
+    c.first_name, c.last_name, o.date;
