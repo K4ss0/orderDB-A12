@@ -22,7 +22,7 @@ Customer name date of order total spent on order
 SELECT
     c.first_name,
     c.last_name,
-    o.date,
+    DATE(o.date) AS date_only,
     SUM(pt.price * op.quantity) AS total_for_date
 FROM
     pizza_orders.customers c
@@ -33,6 +33,6 @@ JOIN
 JOIN
     pizza_orders.pizza_types pt ON op.idpizza = pt.idpizza
 GROUP BY
-    c.idcustomers, c.first_name, c.last_name, o.date
+    c.idcustomers, c.first_name, c.last_name, DATE(o.date)
 ORDER BY
-    c.first_name, c.last_name, o.date;
+    c.first_name, c.last_name, date_only;
